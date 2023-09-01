@@ -1,0 +1,3 @@
+#!/bin/bash
+gcc -Wall -Werror -pedantic -Wextra -std=gnu89 -Wformat -g *.c -o a
+
