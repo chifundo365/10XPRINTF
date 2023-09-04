@@ -24,8 +24,40 @@ Buffer *init_buffer(size_t size)
 }
 
 
-void free_memory(Buffer *buffer)
+Width_Opt *init_width()
 {
-    free(buffer->buffer_space);
-    free(buffer);
+	Width_Opt *options = malloc(sizeof(Width_Opt));
+	options->width = 0;
+	options->zero_flag = 0;
+	options->format_position  = 0;
+
+	return options;
+}
+
+Flags *init_flags()
+{
+	Flags *flag = malloc(sizeof(Flags));
+	flag->flg = NULL;
+	flag->hex_upper = NULL;
+	flag->hex_lower = NULL;
+	flag->octal = NULL;
+
+	return flag;
+}
+
+
+
+
+void free_buffer(Buffer *buffer)
+{
+	free(buffer->buffer_space);
+	free(buffer);
+
+}
+
+void free_options(Flags *flag, Width_Opt *options)
+{
+	free(flag);
+
+	free(options);
 }

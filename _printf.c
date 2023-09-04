@@ -7,13 +7,10 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 	void (*length_flag)(Flags*);
 	void (*numbers)(va_list, Flags*, Buffer*);
 
-	Flags *flag  = malloc(sizeof(Flags));
-	flag->flg = NULL;
-	flag->hex_upper = NULL;
-	flag->hex_lower = NULL;
-	flag->octal = NULL;
+	Flags *flag  = init_flags();
 
-	
+	Width_Opt *options = init_width();
+
 
 	while (*format != '\0')
 	{
@@ -35,6 +32,9 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				length_flag(flag);
 				format++;
 			}
+
+			width_options(format, list, options);
+			format  = format + options->format_position;
 			
 
 			numbers = select_number(format);
@@ -63,7 +63,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 
         
 
-	free(flag);
+	free_options(flag, options);
 	return (buffer->length);
 
 }
@@ -91,7 +91,7 @@ int _printf(const char *format, ...)
 	len += start_printf(list, format, buffer);
 	_putchar(buffer);
 
-	free_memory(buffer);
+	free_buffer(buffer);
 	va_end(list);
 
 	return (len);  

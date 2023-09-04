@@ -10,42 +10,42 @@
 
 typedef struct
 {
-    int length;
-    char *buffer_space;
-    int position;
-    int arg;
+	int length;
+	char *buffer_space;
+	int position;
+	int arg;
 }Buffer;
 
 typedef struct 
 {
-    char *specifier;
-    void (*f) (va_list, Buffer *) ;
+	char *specifier;
+	void (*f) (va_list, Buffer *) ;
 
 }Specifiers;
 
 typedef struct
 {
-    int h;
-    int l;
+	int h;
+	int l;
 
 }Length_Mod;
 
 typedef struct
 {
-    char *flg;
-    char *hex_upper;
-    char *hex_lower;
-    char *octal;
-    int space;
-    Length_Mod length_modifier;
+	char *flg;
+	char *hex_upper;
+	char *hex_lower;
+	char *octal;
+	int space;
+	Length_Mod length_modifier;
 
 }Flags;
 
 
 typedef struct
 {
-    char *specifier;
-    void (*f)(va_list, Flags*, Buffer*);
+	char *specifier;
+	void (*f)(va_list, Flags*, Buffer*);
 }Number_OP;
 
 void (*select_number(const char *))(va_list, Flags*, Buffer*);
@@ -57,8 +57,8 @@ void insert_hex_lower(va_list, Flags*, Buffer*);
 void insert_octal(va_list, Flags*, Buffer*);
 typedef struct
 {
-    char *flag;
-    void(*f)(Flags *);
+	char *flag;
+	void(*f)(Flags *);
 }Flag_Op;
 
 void (*select_flag(const char *)) (Flags *flag);
@@ -76,13 +76,30 @@ Buffer *init_buffer(size_t);
 int start_printf(va_list, const char *, Buffer*);
 void (*select_specifier(const char *)) (va_list, Buffer *); 
 
+/*handle width */
+typedef struct
+{
+	int width;
+	int zero_flag;
+	int format_position;
+
+}Width_Opt;
+
+void width_options(const char *, va_list, Width_Opt*); 
+
 /** handle strings*/
 int _strlen(char *);
 void print_string(va_list, Buffer *);
 void print_char(va_list, Buffer *);
 void print_normal_character(const char *, Buffer *);
 
-void free_memory(Buffer *);
+/* handle memory */
+Flags *init_flags();
+Width_Opt *init_width();
+void free_buffer(Buffer *);
+void free_options(Flags*, Width_Opt*);
+
+
 void print_binary(va_list, Buffer *);
 
 void non_printable_char(va_list, Buffer *);
