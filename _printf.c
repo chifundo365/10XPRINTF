@@ -5,11 +5,11 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 	void (*fr)(va_list, Buffer*);
 	void (*flags)(Flags*);
 	void (*length_flag)(Flags*);
-	void (*numbers)(va_list, Flags*, Buffer*);
+	void (*numbers)(va_list, Flags*, Width_Opt*, Buffer*);
 
 	Flags *flag  = init_flags();
 
-	Width_Opt *options = init_width();
+	Width_Opt *w_options = init_width();
 
 
 	while (*format != '\0')
@@ -33,15 +33,15 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				format++;
 			}
 
-			width_options(format, list, options);
-			format  = format + options->format_position;
+			width_options(format, list, w_options);
+			format  = format + (w_options->format_position);
 			
 
 			numbers = select_number(format);
 
 			if (numbers != NULL)
 			{
-				numbers(list, flag, buffer);
+				numbers(list, flag, w_options, buffer);
 			}
 
 			fr = select_specifier(format);
@@ -63,7 +63,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 
         
 
-	free_options(flag, options);
+	free_options(flag, w_options);
 	return (buffer->length);
 
 }

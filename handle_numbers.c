@@ -1,6 +1,6 @@
 #include "main.h"
 
-void (*select_number(const char *c))(va_list, Flags*, Buffer*)
+void (*select_number(const char *c))(va_list, Flags*, Width_Opt*, Buffer*)
 {
 	Number_OP op[6] = 
 	{
@@ -55,7 +55,7 @@ void (*select_number(const char *c))(va_list, Flags*, Buffer*)
 }
 
 
-void insert_int(va_list list,  Flags *flag, Buffer *buffer)
+void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *buffer)
 {
 	long int long_power = 1;
 	short int short_power = 1;
@@ -67,7 +67,11 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 	long int original_long_number;
 	short int short_number;
 	short int original_short_number;
+	char numbers_buffer[50];
+	int nb_length;
+	int nb = 0;
 	char c;
+	int i = 0;
 
 
 	if ((flag->length_modifier.l) == 1)
@@ -76,12 +80,11 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 		long_number = va_arg(list, long int);
 		original_long_number = long_number;
 
-
+		
 		if (long_number < 0)
 		{
-			buffer->buffer_space[buffer->position] = '-';
-			buffer->position++;
-			buffer->length++;
+			numbers_buffer[nb] = '-';
+			nb++;
 			long_number *= -1;
 			original_long_number = long_number;
 		}
@@ -89,17 +92,15 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 		{
 			if (flag->flg != NULL)
 			{
-				buffer->buffer_space[buffer->position] = flag->flg[0];
-				buffer->position++;
-				buffer->length++;
+				numbers_buffer[nb] = flag->flg[0];
+				nb++;
 				flag->flg = NULL;
 			}
 
-			if ((flag->space) == 1)
+			if (((flag->space) == 1) && width_options->width == 0)
 			{
-				buffer->buffer_space[buffer->position] = ' ';
-				buffer->position++;
-				buffer->length++;
+				numbers_buffer[nb] = ' ';
+				nb++;
 				flag->space = 0;
 			}
 		}
@@ -117,12 +118,49 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 		{
 			digit = long_number / long_power;
 			c = digit + '0';
-			buffer->buffer_space[buffer->position] = c;
-			buffer->position++;
-			buffer->length++;
+			numbers_buffer[nb] = c;
+			nb++;
 			long_number %= long_power;
 			long_power /= 10;
 		}
+
+		numbers_buffer[nb] = '\0';
+
+		nb_length = _strlen(numbers_buffer);
+
+		if (width_options->zero_flag == 0)
+		{
+
+			while(nb_length < width_options->width)
+			{
+				buffer->buffer_space[buffer->position] = ' ';
+				buffer->position++;
+				buffer->length++;
+				nb_length++;
+			}
+		}
+		else
+		{
+			while(nb_length < width_options->width)
+			{
+				buffer->buffer_space[buffer->position] = '0';
+				buffer->position++;
+				buffer->length++;
+				nb_length++;
+			}
+		}
+
+		nb  = 0;
+
+
+		while (numbers_buffer[nb] != '\0')
+		{
+			buffer->buffer_space[buffer->position] = numbers_buffer[nb];
+			buffer->position++;
+			buffer->length++;
+			nb++; 
+		}
+		
 
 
 	}
@@ -132,6 +170,23 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 		flag->length_modifier.h = 0;
 		short_number = (short int)va_arg(list, int);
 		original_short_number = short_number;
+
+		if ((width_options->width != 0) && (width_options->zero_flag == 0))
+		{
+			while (i < width_options->width)
+			{
+				buffer->buffer_space[buffer->position] = ' ';
+				buffer->position++;
+				buffer->length++;
+				i++;
+			}
+		}else if ((width_options->width != 0) && (width_options->zero_flag != 0))
+		{
+			buffer->buffer_space[buffer->position] = '0';
+			buffer->position++;
+			buffer->length++;
+			i++;
+		}
 
 
 		if (short_number < 0)
@@ -191,6 +246,23 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 		normal_number = va_arg(list,  int);
 		original_normal_number = normal_number;
 
+		if ((width_options->width != 0) && (width_options->zero_flag == 0))
+		{
+			while (i < width_options->width)
+			{
+				buffer->buffer_space[buffer->position] = ' ';
+				buffer->position++;
+				buffer->length++;
+				i++;
+			}
+		}
+		else if ((width_options->width != 0) && (width_options->zero_flag != 0))
+		{
+			buffer->buffer_space[buffer->position] = '0';
+			buffer->position++;
+			buffer->length++;
+			i++;
+		}
 
 		if (normal_number < 0)
 		{
@@ -246,7 +318,7 @@ void insert_int(va_list list,  Flags *flag, Buffer *buffer)
 }
 
 
-void insert_unsigned_int(va_list list, Flags *flag, Buffer *buffer)
+void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Buffer *buffer)
 {
 	unsigned long int long_power = 1;
 	unsigned short int short_power = 1;
@@ -386,7 +458,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Buffer *buffer)
 
 
 
-void insert_hex_upper(va_list list, Flags *flag, Buffer *buffer)
+void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffer *buffer)
 {
 	unsigned long int long_number;
 	unsigned short int short_number;
@@ -630,7 +702,7 @@ void insert_hex_upper(va_list list, Flags *flag, Buffer *buffer)
 
 
 
-void insert_hex_lower(va_list list, Flags *flag, Buffer *buffer)
+void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffer *buffer)
 {
 	unsigned long int long_number;
 	unsigned short int short_number;
@@ -870,7 +942,7 @@ void insert_hex_lower(va_list list, Flags *flag, Buffer *buffer)
 
 
 
-void insert_octal(va_list list, Flags  *flag, Buffer *buffer)
+void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *buffer)
 {
 	unsigned int  normal_number;
 	unsigned long int long_number;

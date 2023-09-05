@@ -45,16 +45,29 @@ typedef struct
 
 typedef struct
 {
+	int width;
+	int zero_flag;
+	int format_position;
+
+}Width_Opt;
+
+typedef struct
+{
 	char *specifier;
-	void (*f)(va_list, Flags*, Buffer*);
+	void (*f)(va_list, Flags*, Width_Opt*, Buffer*);
 }Number_OP;
 
-void (*select_number(const char *))(va_list, Flags*, Buffer*);
+/*handle width */
+
+
+void width_options(const char *, va_list, Width_Opt*); 
+
+void (*select_number(const char *))(va_list, Flags*, Width_Opt*, Buffer*);
 
 /* number specifiers functions*/
 void insert_int(va_list, Flags*, Width_Opt*, Buffer*);
-void insert_unsigned_int(va_list, Flags*, Width_Opt* Buffer*);
-void insert_hex_upper(va_list, Flags*, Width_Opt*, Buffer *);
+void insert_unsigned_int(va_list, Flags*, Width_Opt*, Buffer*);
+void insert_hex_upper(va_list, Flags*, Width_Opt*, Buffer*);
 void insert_hex_lower(va_list, Flags*, Width_Opt*, Buffer*);
 void insert_octal(va_list, Flags*, Width_Opt*, Buffer*);
 typedef struct
@@ -77,17 +90,6 @@ int _printf(const char *, ...);
 Buffer *init_buffer(size_t);
 int start_printf(va_list, const char *, Buffer*);
 void (*select_specifier(const char *)) (va_list, Buffer *); 
-
-/*handle width */
-typedef struct
-{
-	int width;
-	int zero_flag;
-	int format_position;
-
-}Width_Opt;
-
-void width_options(const char *, va_list, Width_Opt*); 
 
 /** handle strings*/
 int _strlen(char *);
