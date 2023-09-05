@@ -41,6 +41,7 @@ typedef struct
 
 }Flags;
 
+/*handle numbers*/
 
 typedef struct
 {
@@ -50,11 +51,12 @@ typedef struct
 
 void (*select_number(const char *))(va_list, Flags*, Buffer*);
 
-void insert_int(va_list, Flags*, Buffer*);
-void insert_unsigned_int(va_list, Flags*, Buffer*);
-void insert_hex_upper(va_list, Flags*, Buffer *);
-void insert_hex_lower(va_list, Flags*, Buffer*);
-void insert_octal(va_list, Flags*, Buffer*);
+/* number specifiers functions*/
+void insert_int(va_list, Flags*, Width_Opt*, Buffer*);
+void insert_unsigned_int(va_list, Flags*, Width_Opt* Buffer*);
+void insert_hex_upper(va_list, Flags*, Width_Opt*, Buffer *);
+void insert_hex_lower(va_list, Flags*, Width_Opt*, Buffer*);
+void insert_octal(va_list, Flags*, Width_Opt*, Buffer*);
 typedef struct
 {
 	char *flag;

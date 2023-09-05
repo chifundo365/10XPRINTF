@@ -3,10 +3,10 @@
 
 int main(void)
 {
-/*    char *name = "mocasin";*/
+    char *name = "mocasin";
     
-    _printf("%#lo\n", 19008885000);
-     printf("%#lo\n", 19008885000);
+    _printf("%#lo\n%s", 19008885000, name);
+     printf("%#lo\n%s", 19008885000, name);
     return (0);
 }
 
