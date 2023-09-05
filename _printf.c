@@ -33,9 +33,17 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				format++;
 			}
 
-			width_options(format, list, w_options);
+			width_options(format, list, w_options); 
 			format  = format + (w_options->format_position);
-			
+
+			length_flag = select_flag(format);
+
+			if (length_flag)
+			{
+				length_flag(flag);
+				format++;
+			}
+              		printf("%c", *format);			
 
 			numbers = select_number(format);
 
