@@ -5,8 +5,9 @@ int main(void)
 {
     char *name = "mocasin";
     
-    _printf("%*ld\n", 13, 1900888000);
-/*     printf("%3ld\n", 1900888000);*/
+    _printf("%0o   %s\n cool\n", 1900488500, name);
+     printf("%0o   %s\n cool\n", 1900488500, name);
+
     return (0);
 }
 

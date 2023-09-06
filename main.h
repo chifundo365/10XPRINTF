@@ -98,6 +98,7 @@ void print_char(va_list, Buffer *);
 void print_normal_character(const char *, Buffer *);
 
 /* handle memory */
+void insert_into_buffer(Buffer*, char);
 Flags *init_flags();
 Width_Opt *init_width();
 void free_buffer(Buffer *);

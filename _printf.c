@@ -43,8 +43,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				length_flag(flag);
 				format++;
 			}
-              		printf("%c", *format);			
-
+			
 			numbers = select_number(format);
 
 			if (numbers != NULL)

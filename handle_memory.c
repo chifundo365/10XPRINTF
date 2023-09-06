@@ -61,3 +61,10 @@ void free_options(Flags *flag, Width_Opt *options)
 
 	free(options);
 }
+
+void insert_into_buffer(Buffer *buffer, char c)
+{
+	buffer->buffer_space[buffer->position] = c;
+	buffer->position++;
+	buffer->length++;
+}
