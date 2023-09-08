@@ -24,7 +24,7 @@ Buffer *init_buffer(size_t size)
 }
 
 
-Width_Opt *init_width()
+Width_Opt *init_width(void)
 {
 	Width_Opt *options = malloc(sizeof(Width_Opt));
 	options->width = 0;
@@ -34,7 +34,7 @@ Width_Opt *init_width()
 	return options;
 }
 
-Flags *init_flags()
+Flags *init_flags(void)
 {
 	Flags *flag = malloc(sizeof(Flags));
 	flag->flg = NULL;
