@@ -46,6 +46,14 @@ Flags *init_flags(void)
 }
 
 
+Precision *init_precision(void)
+{
+	Precision *precision = malloc(sizeof(Precision));
+	precision->size = 0;
+	precision->format_position = 0;
+
+	return (precision);
+}
 
 
 void free_buffer(Buffer *buffer)
@@ -55,11 +63,11 @@ void free_buffer(Buffer *buffer)
 
 }
 
-void free_options(Flags *flag, Width_Opt *options)
+void free_options(Flags *flag, Width_Opt *options, Precision *precision)
 {
 	free(flag);
-
 	free(options);
+	free(precision);
 }
 
 void insert_into_buffer(Buffer *buffer, char c)

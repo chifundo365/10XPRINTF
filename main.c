@@ -5,8 +5,8 @@ int main(void)
 {
     /*char *name = "mocasin";*/
     
-    _printf("%0o   \n cool\n", 1900488500);
-     printf("%0o   \n cool\n", 1900488500);
+    _printf("c:%.2d\n", 1900488500);
+    printf("r:%.2d\n", 1900488500);
 
     return (0);
 }

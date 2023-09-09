@@ -51,6 +51,16 @@ typedef struct
 
 }Width_Opt;
 
+
+typedef struct
+{
+	int size;
+	int format_position;
+	Width_Opt width_options;
+}Precision;
+
+void precision_options(const char*, Precision*, va_list);
+
 typedef struct
 {
 	char *specifier;
@@ -101,8 +111,9 @@ void print_normal_character(const char *, Buffer *);
 void insert_into_buffer(Buffer*, char);
 Flags *init_flags(void);
 Width_Opt *init_width(void);
+Precision *init_precision(void);
 void free_buffer(Buffer *);
-void free_options(Flags*, Width_Opt*);
+void free_options(Flags*, Width_Opt*, Precision*);
 
 
 void print_binary(va_list, Buffer *);
