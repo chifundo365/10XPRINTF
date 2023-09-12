@@ -44,7 +44,7 @@ void width_options(const char *format, va_list list, Width_Opt *options)
 
 }
 
-void precision_options(const char *format, Precision *precision, va_list list)
+void precision_options(const char *format, Precision *precision, Width_Opt *width_options, va_list list)
 {
 	int format_position = 0;
 	int precision_size = 0;
@@ -84,6 +84,7 @@ void precision_options(const char *format, Precision *precision, va_list list)
 		if (*format == '*')
 		{
 			width = va_arg(list, int);
+			format_position++;
 		}
 
 		if (*format != 's')
@@ -93,9 +94,8 @@ void precision_options(const char *format, Precision *precision, va_list list)
 			{
 				if (*format == operations[i])
 				{
-					precision->width_options.width = width;
-					format++;
-					format_position++;
+					width_options->width = width;
+					zero_flag = 1;
 					break;
 				}
 				i++;
@@ -105,13 +105,11 @@ void precision_options(const char *format, Precision *precision, va_list list)
 		else
 		{
 			precision_size = width;
-			format++;
-			format_position++;
 		}
 
 
 		precision->size = precision_size;
-		precision->width_options.zero_flag = zero_flag;
+		width_options->zero_flag = zero_flag; 
 		precision->format_position = format_position;
 
 				

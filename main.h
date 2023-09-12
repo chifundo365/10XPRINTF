@@ -56,10 +56,9 @@ typedef struct
 {
 	int size;
 	int format_position;
-	Width_Opt width_options;
 }Precision;
 
-void precision_options(const char*, Precision*, va_list);
+void precision_options(const char*, Precision*, Width_Opt*,  va_list);
 
 typedef struct
 {

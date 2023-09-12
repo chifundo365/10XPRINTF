@@ -11,8 +11,6 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 
 	Width_Opt *w_options = init_width();
 	Precision *precision = init_precision();
-	precision->width_options = *w_options;
-
 
 	while (*format != '\0')
 	{
@@ -35,10 +33,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				format++;
 			}
 
-
-			precision_options(format, precision, list);
-			format += precision->format_position;
-			
+						
 			width_options(format, list, w_options); 
 			format  = format + (w_options->format_position);
 
@@ -50,8 +45,9 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				format++;
 			}
 
-			
-			
+			precision_options(format, precision, w_options, list);
+			format += precision->format_position;
+	
 			numbers = select_number(format);
 
 			if (numbers != NULL)
