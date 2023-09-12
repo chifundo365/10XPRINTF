@@ -5,10 +5,18 @@ void width_options(const char *format, va_list list, Width_Opt *options)
 	int width = 0;
 	int zero_flag = 0;
 	int format_position = 0;
+	int minus = 0;
 
 	if (*format == '0')
 	{
 		zero_flag = 1;
+		format++;
+		format_position++;
+	}
+
+	if (*format == '-')
+	{
+		minus = 1;
 		format++;
 		format_position++;
 	}
@@ -41,6 +49,7 @@ void width_options(const char *format, va_list list, Width_Opt *options)
 	options->width  = width;
 	options->zero_flag = zero_flag;
 	options->format_position = format_position;
+	options->minus = minus;
 
 }
 

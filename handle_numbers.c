@@ -311,10 +311,15 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 		if (width_options->zero_flag == 0)
 		{
 
-			while(nb_length < width_options->width)
-			{	
-				insert_into_buffer(buffer, ' ');
-				nb_length++;
+			if (!width_options->minus)
+			{
+			
+				while(nb_length < width_options->width)
+				{	
+					insert_into_buffer(buffer, ' ');
+					nb_length++;
+
+				}
 
 			}
 
@@ -341,6 +346,19 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			insert_into_buffer(buffer, numbers_buffer[nb]);
 			nb++; 
 		}
+
+        nb_length = _strlen(numbers_buffer);
+		
+		if (width_options->minus)
+			{
+				while(nb_length < width_options->width)
+				{	
+					insert_into_buffer(buffer, ' ');
+					nb_length++;
+
+				}
+
+			}
 
 	}
 

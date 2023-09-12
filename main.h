@@ -21,6 +21,7 @@ typedef struct
 	int width;
 	int zero_flag;
 	int format_position;
+	int minus;
 
 }Width_Opt;
 

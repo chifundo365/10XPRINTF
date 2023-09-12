@@ -30,7 +30,7 @@ Width_Opt *init_width(void)
 	options->width = 0;
 	options->zero_flag = 0;
 	options->format_position  = 0;
-
+	options->minus = 0;
 	return options;
 }
 

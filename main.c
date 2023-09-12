@@ -7,6 +7,6 @@
  */
 int main(void)
 {
-    _printf("%S\n", "Best\nSchool\t");
+    _printf("%-22dme", 3);
     return (0);
 }
