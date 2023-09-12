@@ -1,6 +1,30 @@
 #include "main.h"
 
+void (*custom_specifier_selecter(const char *c))(va_list list, Buffer *buffer)
+{
+	Custom_Specs specs[3] = 
+	{
+		{"S", non_printable_char},
+		{"b", print_binary},
+		{NULL, NULL}
+	};
 
+	int i = 0;
+
+	while (specs[i].specifier != NULL)
+	{
+		if ((*c) == (specs[i].specifier[0]))
+		{
+			return (specs[i].f);
+		}
+
+		i++;
+	}
+
+
+	return (NULL);
+
+}
 
 void print_binary(va_list list, Buffer *buffer)
 {
@@ -121,12 +145,10 @@ char *non_printable_hex(unsigned int number)
 
 }
 
-
-
 void non_printable_char(va_list list, Buffer *buffer)
 {
 	char *string = va_arg(list, char *);
-        char *hex_upper;
+    char *hex_upper;
 	char *original_hex;
 	unsigned int character;
 
@@ -144,10 +166,7 @@ void non_printable_char(va_list list, Buffer *buffer)
 				{
 					while (*hex_upper != '\0')
 					{
-						buffer->buffer_space[buffer->position] = *hex_upper;
-						buffer->position++;
-						buffer->length++;
-        
+						insert_into_buffer(buffer, *hex_upper);
 						hex_upper++;
 						
 					}
@@ -159,11 +178,8 @@ void non_printable_char(va_list list, Buffer *buffer)
 			}
 			else
 			{
-				buffer->buffer_space[buffer->position] = *string;
-				buffer->position++;
-				buffer->length++;
+				insert_into_buffer(buffer, *string);
 			}
-
 
 			string++;
 		}

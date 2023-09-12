@@ -2,7 +2,7 @@
 
 void (*select_number(const char *c))(va_list, Flags*, Width_Opt*, Buffer*)
 {
-	Number_OP op[6] = 
+	Number_OP op[7] = 
 	{
 
 		{"id", insert_int},
@@ -10,6 +10,7 @@ void (*select_number(const char *c))(va_list, Flags*, Width_Opt*, Buffer*)
 		{"x", insert_hex_lower},
 		{"X", insert_hex_upper},
 		{"o", insert_octal},
+		{"p", memory_address_hex},
 		{NULL, NULL}
 
 	};
@@ -1446,8 +1447,94 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 }
 
 
+void memory_address_hex(va_list list,Flags *flag, Width_Opt *width, Buffer *buffer)
+{
 
+	void *ptr = va_arg(list, void *);
+	uintptr_t  address = (uintptr_t)ptr;
+	char buf[50];
+	int c;
+	unsigned int r;
+    int i = 0;
+	int len;
+	char temp;
 
+	while (address > 0)
+	{
+		r = address  % 16;
+
+		if (r >= 10 && r <= 15)
+		{
+	        	c = r - 10 + 'a';	
+		}
+		else
+		{
+			c = r + '0';
+		}
+
+		buf[i] = c;
+		address /= 16;
+		i++;
+	}
+
+	buf[i] = '\0';
+
+	i = 0;
+	len = _strlen(buf);
+
+	while (i < len / 2)
+	{
+ 		temp = buf[i];
+		buf[i] = buf[len - i - 1];
+		buf[len - i - 1] = temp;
+		i++;
+	}
+
+	if (len > 0)
+	{
+		insert_into_buffer(buffer, 48);
+		insert_into_buffer(buffer, 'x');
+	}
+
+	i = 0;
+
+	if (flag)
+	{
+
+	}
+
+	if (width->width)
+	{
+		if (width->zero_flag)
+		{
+			while(width->width < len)
+			{
+				insert_into_buffer(buffer, 48);
+				width->width++;
+			}
+
+			width->width = 0;
+			width->zero_flag = 0;
+		}
+		else
+		{
+			while(width->width < len)
+			{
+				insert_into_buffer(buffer, ' ');
+				width->width++;
+			}
+
+			width->width = 0;
+		}
+	}
+
+	while (buf[i] != '\0')
+	{
+		insert_into_buffer(buffer, buf[i]);
+		i++;
+	}
+
+}
 
 
 

@@ -110,9 +110,7 @@ void precision_options(const char *format, Precision *precision, Width_Opt *widt
 
 		precision->size = precision_size;
 		width_options->zero_flag = zero_flag; 
-		precision->format_position = format_position;
-
-				
+		precision->format_position = format_position;			
 	}
 
 

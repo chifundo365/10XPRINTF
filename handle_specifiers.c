@@ -13,15 +13,13 @@ int _strlen(char *c)
 	return len;
 }
 
-void (*select_specifier(const char *c))(va_list list, Buffer *buffer)
+void (*select_specifier(const char *c))(va_list, Width_Opt*, Precision*, Buffer*)
 {
 	Specifiers specs[10] = 
 	{
 		{"c", print_char},
 		{"s", print_string},
-		{"b", print_binary},
-		{"S", non_printable_char},
-		{"p", memory_address_hex},
+		
 		{NULL, NULL}
 	};
 
@@ -51,106 +49,99 @@ void (*select_specifier(const char *c))(va_list list, Buffer *buffer)
 	return NULL;
 }
 
-void print_string(va_list list, Buffer *buffer)
+void print_string(va_list list, Width_Opt *width, Precision *precision, Buffer *buffer)
 {
 	char *s;
+	int len;
+	int i = 0;
 
 	s = va_arg(list, char*);
+	len = _strlen(s);
 
-	while (*s != '\0')
+	if (width->width)
 	{
-		buffer->buffer_space[buffer->position] = *s; 
-		buffer->position++;
-		buffer->length++;
-		s++;
+		if (width->zero_flag)
+		{
+			while (len < width->width)
+			{
+				insert_into_buffer(buffer, 48);
+				len++;
+			}
+
+			while (s[i] != '\0')
+			{
+				insert_into_buffer(buffer, s[i]);
+				i++;
+			}
+		}
+		else
+		{
+			while (len < width->width)
+			{
+				insert_into_buffer(buffer, ' ');
+				len++;
+			}
+
+			while (s[i] != '\0')
+			{
+				insert_into_buffer(buffer, s[i]);
+				i++;
+			}
+		}
+	}
+
+	len = _strlen(s);
+    i = 0;
+	if (precision->size)
+	{
+		while ((precision->size > 0) && (s[i] != '\0'))
+		{
+			insert_into_buffer(buffer, s[i]);
+			precision->size--;
+			i++;
+		}
+	}
+	else if ((!width->width) && (!precision->size))
+	{
+		while(s[i] != '\0')
+		{
+			insert_into_buffer(buffer, s[i]);
+			i++;
+		}
 	}
 
 }
 
-void print_char(va_list list, Buffer *buffer)
+void print_char(va_list list, Width_Opt *width, Precision *precision, Buffer *buffer)
 {
 	int c;
 	c = va_arg(list, int);
-	if (c)
 
-		buffer->buffer_space[buffer->position]= c;
-	buffer->position++;
-	buffer->length++;
+	if (precision->size)
+	{
+		precision->size = 0;
+	}
+
+	if (width->width)
+	{
+		while ((width->width - 1) > 0)
+		{
+			insert_into_buffer(buffer, ' ');
+			width->width--;
+		}
+
+		insert_into_buffer(buffer, c);
+	}
+	else
+	{
+		insert_into_buffer(buffer, c) ;
+	}
+
 }
 
 void print_normal_character(const char *c, Buffer *buffer)
 {
-	buffer->buffer_space[buffer->position] = *c;
-	buffer->position++;
-	buffer->length++;
-
+	insert_into_buffer(buffer, *c);
 }
-
-
-void memory_address_hex(va_list list, Buffer *buffer)
-{
-
-	void *ptr = va_arg(list, void *);
-	uintptr_t  address = (uintptr_t)ptr;
-	char buf[50];
-	int c;
-	unsigned int r;
-        int i = 0;
-	int len;
-	char temp;
-
-	while (address > 0)
-	{
-		r = address  % 16;
-
-		if (r >= 10 && r <= 15)
-		{
-	        	c = r - 10 + 'a';	
-		}
-		else
-		{
-			c = r + '0';
-		}
-
-		buf[i] = c;
-		address /= 16;
-		i++;
-	}
-
-	buf[i] = 'x';
-	buf[i + 1] = 48;
-	buf[i + 2] = '\0';
-
-	i = 0;
-	len = _strlen(buf);
-
-	while (i < len / 2)
-	{
- 		temp = buf[i];
-		buf[i] = buf[len - i - 1];
-		buf[len - i - 1] = temp;
-		i++;
-	}
-
-	i = 0;
-
-	while (i < len)
-	{
-		buffer->buffer_space[buffer->position] = buf[i];
-		buffer->position++;
-		buffer->length++;
-		i++;
-	}
-
-}
-
-
-
-
-
-
-
-
-
 
 

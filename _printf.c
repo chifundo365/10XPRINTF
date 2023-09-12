@@ -2,7 +2,8 @@
 
 int start_printf(va_list list, const char *format, Buffer *buffer)
 {
-	void (*fr)(va_list, Buffer*);
+	void (*string_specifiers)(va_list, Width_Opt*, Precision*, Buffer*);
+	void (*custom_specifier)(va_list, Buffer*);
 	void (*flags)(Flags*);
 	void (*length_flag)(Flags*);
 	void (*numbers)(va_list, Flags*, Width_Opt*, Buffer*);
@@ -55,11 +56,18 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				numbers(list, flag, w_options, buffer);
 			}
 
-			fr = select_specifier(format);
+			string_specifiers = select_specifier(format);
 
-			if (fr != NULL)
+			if (string_specifiers != NULL)
 			{
-				fr(list, buffer);
+				string_specifiers(list, w_options, precision, buffer);
+			}
+
+			custom_specifier = custom_specifier_selecter(format);
+
+			if ( custom_specifier)
+			{
+				custom_specifier(list, buffer);
 			}
 		}
 		else

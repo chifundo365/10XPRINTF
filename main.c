@@ -1,13 +1,12 @@
 #include "main.h"
 
-
+/**
+ * main - Entry point
+ *
+ * Return: Always 0
+ */
 int main(void)
 {
-    /*char *name = "mocasin";*/
-    
-    _printf("c:%d\n", 04);
-     printf("r:%d\n", 04, 4);
-
+    _printf("%S\n", "Best\nSchool\t");
     return (0);
 }
-

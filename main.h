@@ -16,12 +16,33 @@ typedef struct
 	int arg;
 }Buffer;
 
+typedef struct
+{
+	int width;
+	int zero_flag;
+	int format_position;
+
+}Width_Opt;
+
+typedef struct
+{
+	int size;
+	int format_position;
+}Precision;
+
+
 typedef struct 
 {
 	char *specifier;
-	void (*f) (va_list, Buffer *) ;
+	void (*f) (va_list, Width_Opt*, Precision*, Buffer *) ;
 
 }Specifiers;
+
+typedef struct
+{
+	char *specifier;
+	void (*f) (va_list, Buffer*);
+}Custom_Specs;
 
 typedef struct
 {
@@ -41,22 +62,6 @@ typedef struct
 
 }Flags;
 
-/*handle numbers*/
-
-typedef struct
-{
-	int width;
-	int zero_flag;
-	int format_position;
-
-}Width_Opt;
-
-
-typedef struct
-{
-	int size;
-	int format_position;
-}Precision;
 
 void precision_options(const char*, Precision*, Width_Opt*,  va_list);
 
@@ -98,13 +103,13 @@ void _putchar(Buffer *);
 int _printf(const char *, ...);
 Buffer *init_buffer(size_t);
 int start_printf(va_list, const char *, Buffer*);
-void (*select_specifier(const char *)) (va_list, Buffer *); 
-
+void (*select_specifier(const char *)) (va_list, Width_Opt*, Precision*, Buffer *); 
+void (*custom_specifier_selecter(const char*))(va_list, Buffer*);
 /** handle strings*/
 int _strlen(char *);
-void print_string(va_list, Buffer *);
-void print_char(va_list, Buffer *);
-void print_normal_character(const char *, Buffer *);
+void print_string(va_list, Width_Opt*, Precision*, Buffer*);
+void print_char(va_list, Width_Opt*, Precision*, Buffer*);
+void print_normal_character(const char *, Buffer*);
 
 /* handle memory */
 void insert_into_buffer(Buffer*, char);
@@ -119,5 +124,5 @@ void print_binary(va_list, Buffer *);
 
 void non_printable_char(va_list, Buffer *);
 char *non_printable_hex(unsigned int);
-void memory_address_hex(va_list, Buffer *);
+void memory_address_hex(va_list, Flags*, Width_Opt*, Buffer*);
 #endif
