@@ -7,6 +7,16 @@
  */
 int main(void)
 {
-    _printf("%-22dme", 3);
-    return (0);
+     char *s = malloc(10);
+     unsigned int n = 355544;
+     _printf("%20ome\n", n);
+      printf("%20ome\n", n);
+
+
+     _printf("address: ++%-20p++\n", (void*)s);
+      printf("address: ++%-20p++\n",(void*) s);
+
+     _printf("%R", "abczxy");	      ;
+     return (0);
 }
+

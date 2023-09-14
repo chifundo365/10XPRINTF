@@ -13,6 +13,18 @@ int _strlen(char *c)
 	return len;
 }
 
+int _isalpha(char c)
+{
+	if ((c >= 'a' && c <= 'z') || (c >= 'A'  && c <= 'Z'))
+	{
+		return (1);
+	}
+	else
+	{
+		return (0);
+	}
+}
+
 void (*select_specifier(const char *c))(va_list, Width_Opt*, Precision*, Buffer*)
 {
 	Specifiers specs[10] = 

@@ -2,10 +2,12 @@
 
 void (*custom_specifier_selecter(const char *c))(va_list list, Buffer *buffer)
 {
-	Custom_Specs specs[3] = 
+	Custom_Specs specs[5] = 
 	{
 		{"S", non_printable_char},
 		{"b", print_binary},
+		{"r", insert_reversed_string},
+		{"R", rot13},
 		{NULL, NULL}
 	};
 
@@ -186,3 +188,39 @@ void non_printable_char(va_list list, Buffer *buffer)
 	}  
 }
 
+
+void insert_reversed_string(va_list list, Buffer *buffer)
+{
+	char *string = va_arg(list, char*);
+	int len = (_strlen(string)) -1;
+
+
+	while (len > -1)
+	{
+		insert_into_buffer(buffer, string[len]);
+		len--;
+	}
+}
+
+
+void rot13(va_list list, Buffer *buffer)
+{
+	int offset;
+	char *string = va_arg(list, char*);
+
+	while (*string != '\0')
+	{
+		if (_isalpha(*string))
+		{
+			offset = (*string >= 'a') ? 'a' : 'A';
+			insert_into_buffer(buffer, ((*string - offset + 13) % 26) + offset);
+		}
+		else
+		{
+			insert_into_buffer(buffer, *string);
+		}
+
+		string++;
+	}
+
+}

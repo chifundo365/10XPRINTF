@@ -128,7 +128,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && (width_options->minus == 0))
 		{
 
 			while(nb_length < width_options->width)
@@ -141,7 +141,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (width_options->minus == 0))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -161,6 +161,20 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			insert_into_buffer(buffer, numbers_buffer[nb]);
 			nb++; 
 		}
+
+
+       
+		if (width_options->minus)
+		{
+      			while(nb_length < width_options->width)
+			{
+ 				insert_into_buffer(buffer, ' ');
+				nb_length++;
+
+			}
+
+		}
+
 		
 
 
@@ -220,7 +234,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && width_options->minus == 0)
 		{
 
 			while(nb_length < width_options->width)
@@ -233,7 +247,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if((width_options->zero_flag) && (width_options->minus == 0))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -253,6 +267,18 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			insert_into_buffer(buffer, numbers_buffer[nb]);
 			nb++; 
 		}
+
+		if (width_options->minus)
+			{
+				while(nb_length < width_options->width)
+				{	
+					insert_into_buffer(buffer, ' ');
+					nb_length++;
+
+				}
+
+			}
+
 
 	}
 	else
@@ -308,7 +334,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && (width_options->minus == 0))
 		{
 
 			if (!width_options->minus)
@@ -326,7 +352,7 @@ void insert_int(va_list list,  Flags *flag, Width_Opt *width_options, Buffer *bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (width_options->minus == 0))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -428,7 +454,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && (!width_options->minus))
 		{
 
 			while(nb_length < width_options->width)
@@ -441,7 +467,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if ((width_options->zero_flag == 0) && (!width_options->minus))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -459,8 +485,23 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 		while (numbers_buffer[nb] != '\0')
 		{
 			insert_into_buffer(buffer, numbers_buffer[nb]);
-			nb++; 
+			nb++;
 		}
+
+		if (width_options->minus)
+		{
+			while(nb_length < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				nb_length++;
+
+			}
+
+
+			width_options->minus = 0;
+
+		}
+
 		
 
 
@@ -509,7 +550,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && (!width_options->minus))
 		{
 
 			while(nb_length < width_options->width)
@@ -522,7 +563,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (!width_options->minus))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -541,6 +582,20 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 		{
 			insert_into_buffer(buffer, numbers_buffer[nb]);
 			nb++; 
+		}
+
+
+	 
+		if (width_options->minus)
+		{
+			while(nb_length < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				nb_length++;
+
+			}
+			
+			width_options->minus = 0;
 		}
 
 	}
@@ -588,7 +643,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 		
 		nb_length = _strlen(numbers_buffer);
 
-		if (width_options->zero_flag == 0)
+		if ((width_options->zero_flag == 0) && (!width_options->minus))
 		{
 
 			while(nb_length < width_options->width)
@@ -601,7 +656,7 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 			width_options->width = 0;
 			width_options->zero_flag = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (!width_options->minus))
 		{
 			while(nb_length < width_options->width)
 			{
@@ -622,6 +677,19 @@ void insert_unsigned_int(va_list list, Flags *flag, Width_Opt *width_options, Bu
 			nb++; 
 		}
 
+
+		if (width_options->minus)
+		{
+			while(nb_length < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				nb_length++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
 	}
 
 }
@@ -640,7 +708,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 	char temp;
 	char bf[50];
 	int i, k, j;
-    int len = 0;	
+        int len = 0;
 	int z = 1;
 	i = 0;
 	k = 0;
@@ -657,6 +725,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 			if (digit >= 10 && digit <= 15)
 			{
+				i = 0;
 				while (i < 6)
 				{
 					if (digit == hex_value[i])
@@ -712,7 +781,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((width_options->zero_flag == 0) && (width_options->width != 0) && (!width_options->minus))
 		{
 			while (len < width_options->width)
 			{
@@ -723,7 +792,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (!width_options->width) && (!width_options->minus))
 		{
 			while (len < width_options->width)
 			{
@@ -734,12 +803,26 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
+	
 
 		while (bf[j] != '\0')
 		{
 			insert_into_buffer(buffer, bf[j]);
 			j++;
 		}
+
+
+		if (width_options->minus)
+		{
+			while (len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}	
 
 	}
 	else if (flag->length_modifier.h)
@@ -756,9 +839,11 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			{
 				while (i < 6)
 				{
+					i = 0;
 					if (digit == hex_value[i])
 					{
 						c = hex[i];
+					
 						break;
 					}
 
@@ -808,7 +893,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((width_options->zero_flag == 0) && (width_options->width != 0) && (!width_options->minus))
 		{
 			while (len < width_options->width)
 			{
@@ -819,7 +904,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if((width_options->zero_flag) && (!width_options->minus) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -836,6 +921,21 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			insert_into_buffer(buffer, bf[j]);
 			j++;
 		}
+
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
+
 	
 	}
 	else
@@ -848,6 +948,8 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 			if (digit >= 10 && digit <= 15)
 			{
+				i = 0;
+
 				while (i < 6)
 				{
 					if (digit == hex_value[i])
@@ -855,7 +957,6 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 						c = hex[i];
 						break;
 					}
-
 					i++;
 				}
 
@@ -901,7 +1002,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((width_options->zero_flag == 0) && (width_options->width != 0) && (!width_options->minus))
 		{
 			while (len < width_options->width)
 			{
@@ -912,7 +1013,7 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((width_options->zero_flag) && (width_options->minus) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -928,6 +1029,19 @@ void insert_hex_upper(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 		{
 			insert_into_buffer(buffer, bf[j]);
 			j++;
+		}
+
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
 		}
 	
 	}
@@ -964,9 +1078,11 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			digit = long_number % 16;
 
 			if (digit >= 10 && digit <= 15)
-			{
+			{       
+				i = 0;
 				while (i < 6)
-				{
+				{	
+					i = 0;
 					if (digit == hex_value[i])
 					{
 						c = hex[i];
@@ -1020,7 +1136,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((!width_options->minus) && (width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1031,7 +1147,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->width) && (width_options->zero_flag))
 		{
 			while (len < width_options->width)
 			{
@@ -1049,6 +1165,21 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			j++;
 		}
 
+ 
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
+		 
+
 	}
 	else if (flag->length_modifier.h)
 	{
@@ -1063,7 +1194,8 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			if (digit >= 10 && digit <= 15)
 			{
 				while (i < 6)
-				{
+				{	
+					i = 0;
 					if (digit == hex_value[i])
 					{
 						c = hex[i];
@@ -1116,7 +1248,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((!width_options->minus) && (width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1127,7 +1259,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->zero_flag) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -1144,6 +1276,19 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			insert_into_buffer(buffer, bf[j]);
 			j++;
 		}
+		
+		 
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
 	
 	}
 	else
@@ -1156,8 +1301,11 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 			if (digit >= 10 && digit <= 15)
 			{
+				 
+				i = 0;
 				while (i < 6)
 				{
+
 					if (digit == hex_value[i])
 					{
 						c = hex[i];
@@ -1209,7 +1357,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 
 		j = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((!width_options->minus) && (width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1220,7 +1368,7 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->zero_flag) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1236,6 +1384,18 @@ void insert_hex_lower(va_list list, Flags *flag, Width_Opt *width_options, Buffe
 		{
 			insert_into_buffer(buffer, bf[j]);
 			j++;
+		}
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
 		}
 	
 	}
@@ -1293,7 +1453,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 
 		i = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((!width_options->minus) &&(width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1304,7 +1464,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->zero_flag) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -1321,6 +1481,21 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			insert_into_buffer(buffer, bf[i]);
 			i++;
 		}
+
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
+		
 
 
 	}
@@ -1363,7 +1538,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 
 		i = 0;
 
-		if ((width_options->zero_flag == 0) && (width_options->width != 0))
+		if ((!width_options->minus) && (width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1374,7 +1549,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->zero_flag) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -1391,6 +1566,19 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			insert_into_buffer(buffer, bf[i]);
 			i++;
 		}
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
 
 	}
 	else
@@ -1430,7 +1618,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 
 	i = 0;
 
-	if ((width_options->zero_flag == 0) && (width_options->width != 0))
+	if ((!width_options->minus) && (width_options->zero_flag == 0) && (width_options->width != 0))
 		{
 			while (len < width_options->width)
 			{
@@ -1441,7 +1629,7 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			width_options->zero_flag = 0;
 			width_options->width = 0;
 		}
-		else
+		else if ((!width_options->minus) && (width_options->zero_flag) && (width_options->width))
 		{
 			while (len < width_options->width)
 			{
@@ -1458,6 +1646,20 @@ void insert_octal(va_list list, Flags  *flag, Width_Opt *width_options, Buffer *
 			insert_into_buffer(buffer, bf[i]);
 			i++;
 		}
+
+
+		if (width_options->minus)
+		{
+			while(len < width_options->width)
+			{	
+				insert_into_buffer(buffer, ' ');
+				len++;
+
+			}
+			
+			width_options->minus = 0;
+		}
+
 	
 	}
 
@@ -1473,10 +1675,10 @@ void memory_address_hex(va_list list,Flags *flag, Width_Opt *width, Buffer *buff
 	char buf[50];
 	int c;
 	unsigned int r;
-    int i = 0;
+        int i = 0;
 	int len;
 	char temp;
-
+        
 	while (address > 0)
 	{
 		r = address  % 16;
@@ -1523,7 +1725,7 @@ void memory_address_hex(va_list list,Flags *flag, Width_Opt *width, Buffer *buff
 
 	if (width->width)
 	{
-		if (width->zero_flag)
+		if ((width->zero_flag) && (!width->minus))
 		{
 			while(width->width < len)
 			{
@@ -1534,7 +1736,7 @@ void memory_address_hex(va_list list,Flags *flag, Width_Opt *width, Buffer *buff
 			width->width = 0;
 			width->zero_flag = 0;
 		}
-		else
+		else if ((!width->zero_flag) && (!width->minus))
 		{
 			while(width->width < len)
 			{
@@ -1551,6 +1753,20 @@ void memory_address_hex(va_list list,Flags *flag, Width_Opt *width, Buffer *buff
 		insert_into_buffer(buffer, buf[i]);
 		i++;
 	}
+
+
+	if (width->minus)
+	{
+		while(len < (width->width - 2))
+		{	
+			insert_into_buffer(buffer, ' ');
+			len++;
+
+		}
+			
+		width->minus = 0;
+	}
+
 
 }
 

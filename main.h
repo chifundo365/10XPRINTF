@@ -120,9 +120,10 @@ Precision *init_precision(void);
 void free_buffer(Buffer *);
 void free_options(Flags*, Width_Opt*, Precision*);
 
-
-void print_binary(va_list, Buffer *);
-
+int _isalpha(char);
+void rot13(va_list, Buffer*);
+void print_binary(va_list, Buffer*);
+void insert_reversed_string(va_list, Buffer*);
 void non_printable_char(va_list, Buffer *);
 char *non_printable_hex(unsigned int);
 void memory_address_hex(va_list, Flags*, Width_Opt*, Buffer*);
