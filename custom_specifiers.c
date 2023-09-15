@@ -193,13 +193,16 @@ void insert_reversed_string(va_list list, Buffer *buffer)
 {
 	char *string = va_arg(list, char*);
 	int len = (_strlen(string)) -1;
-
-
-	while (len > -1)
+        
+	if (string)
 	{
-		insert_into_buffer(buffer, string[len]);
-		len--;
-	}
+		while (len > -1)
+		{
+			insert_into_buffer(buffer, string[len]);
+			len--;
+		}
+	}	
+
 }
 
 

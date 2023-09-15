@@ -1,3 +1,5 @@
+#include <limits.h>
+#include <stdio.h>
 #include "main.h"
 
 /**
@@ -7,16 +9,36 @@
  */
 int main(void)
 {
-     char *s = malloc(10);
-     unsigned int n = 355544;
-     _printf("%20ome\n", n);
-      printf("%20ome\n", n);
+    int len;
+    int len2;
+    unsigned int ui;
+    void *addr;
 
-
-     _printf("address: ++%-20p++\n", (void*)s);
-      printf("address: ++%-20p++\n",(void*) s);
-
-     _printf("%R", "abczxy");	      ;
-     return (0);
+    len = _printf("Let's try to printf a simple sentence.\n");
+    len2 = printf("Let's try to printf a simple sentence.\n");
+    ui = (unsigned int)INT_MAX + 1024;
+    addr = (void *)0x7ffe6;
+    _printf("Length:[%d, %i]\n", len, len);
+    printf("Length:[%d, %i]\n", len2, len2);
+    _printf("Negative:[%d]\n", -762534);
+    printf("Negative:[%d]\n", -762534);
+    _printf("Unsigned:[%u]\n", ui);
+    printf("Unsigned:[%u]\n", ui);
+    _printf("Unsigned octal:[%o]\n", ui);
+    printf("Unsigned octal:[%o]\n", ui);
+    _printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
+    printf("Unsigned hexadecimal:[%x, %X]\n", ui, ui);
+    _printf("Character:[%c]\n", 'H');
+    printf("Character:[%c]\n", 'H');
+    _printf("String:[%s]\n", "I am a string !");
+    printf("String:[%s]\n", "I am a string !");
+    _printf("Address:[%p]\n", addr);
+    printf("Address:[%p]\n", addr);
+    len = _printf("Percent:[%%]\n");
+    len2 = printf("Percent:[%%]\n");
+    _printf("Len:[%d]\n", len);
+    printf("Len:[%d]\n", len2);
+    printf("Unknown:[%q]\n");
+    _printf("Unknown:[%q]\n");
+    return (0);
 }
-

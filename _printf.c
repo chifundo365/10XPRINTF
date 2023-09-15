@@ -25,7 +25,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				flags(flag);
 				format++;
 			}
-		
+
 			length_flag = select_flag(format);
 
 			if (length_flag != NULL)
@@ -34,7 +34,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 				format++;
 			}
 
-						
+
 			width_options(format, list, w_options); 
 			format  = format + (w_options->format_position);
 
@@ -48,7 +48,7 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 
 			precision_options(format, precision, w_options, list);
 			format += precision->format_position;
-	
+
 			numbers = select_number(format);
 
 			if (numbers != NULL)
@@ -69,6 +69,11 @@ int start_printf(va_list list, const char *format, Buffer *buffer)
 			{
 				custom_specifier(list, buffer);
 			}
+
+
+			if ((!string_specifiers) && (!custom_specifier) && (!flags)     && (!length_flag) && (!numbers))
+			{
+				print_normal_character(format, buffer);                                     }
 		}
 		else
 		{
